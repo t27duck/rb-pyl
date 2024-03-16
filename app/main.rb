@@ -9,8 +9,8 @@ require "app/slides/prize"
 require "app/slides/pick_space"
 require "app/slides/whammy"
 
-BOARD_START_X = 500
-BOARD_START_Y = 500
+BOARD_START_X = 200
+BOARD_START_Y = 600
 
 PANEL_ROTATION_TIME = 60 # Frames
 SPACE_BOUNCE_TIME = 10 # Frames

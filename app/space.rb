@@ -3,7 +3,7 @@ class Space
   attr_reader :x, :y
 
   LIGHT_WIDTH = 10
-  WIDTH = 80 + LIGHT_WIDTH
+  WIDTH = 100 + LIGHT_WIDTH
 
   COLOR_LIGHT_OFF = { r: 0, g: 0, b: 0 }
   COLOR_LIGHT_ON = { r: 255, g: 255, b: 255 }
