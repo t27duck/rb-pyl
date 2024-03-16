@@ -9,13 +9,14 @@ class Slide
 
   TEXT_SHADOW_OFFSET = 2
 
-  def initialize(game, cash_value: 0, color: { r: 67, g: 94, b: 149 }, image: nil, text: nil, choices: [])
+  def initialize(game, cash_value: 0, color: { r: 67, g: 94, b: 149 }, image: nil, text: nil, target: nil, choices: [])
     @game = game
     @cash_value = cash_value
     @image = image
-    @background_color = color
+    @background_color = determine_background_color(color)
     @text = text
     @choices = []
+    @target = target
     after_init_hook
   end
 
@@ -44,5 +45,17 @@ class Slide
   private
 
   def after_init_hook
+  end
+
+  def determine_background_color(color)
+    return color if color.is_a?(Hash)
+
+    parts = color.split("")
+
+    r = parts[1] + parts[2]
+    g = parts[3] + parts[3]
+    b = parts[5] + parts[6]
+
+    [:r, :g, :b].zip([r, g, b].map(&:hex)).to_h
   end
 end

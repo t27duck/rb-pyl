@@ -1,4 +1,4 @@
-class Slide::Whammy < Slide
+class Slide::JumpToSpace < Slide
   def draw_image
     @game.outputs.sprites << {
       x: @space.x + Space::LIGHT_WIDTH,
@@ -9,13 +9,9 @@ class Slide::Whammy < Slide
     }
   end
 
-  def text
-    "A Whammy"
-  end
-
   private
 
   def after_init_hook
-    @background_color = { r: 255, g: 255, b: 153 }
+    @background_color = { r: 8, g: 90, b: 57 }
   end
 end

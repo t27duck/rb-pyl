@@ -5,13 +5,13 @@ class Slide::PickSpace < Slide
       y: @space.y + Space::LIGHT_WIDTH,
       w: Space::WIDTH - (Space::LIGHT_WIDTH * 2),
       h: Space::WIDTH - (Space::LIGHT_WIDTH * 2),
-      path: "sprites/#{@image}.png"
+      path: "sprites/#{@image}"
     }
   end
 
   private
 
   def after_init_hook
-    @color = { r: 8, g: 90, b: 57 }
+    @background_color = { r: 8, g: 90, b: 57 }
   end
 end

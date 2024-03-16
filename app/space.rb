@@ -13,7 +13,7 @@ class Space
     @game = game
     @slides = slides
     @active = false
-    @active_index = active_index
+    @active_index = rand(3)
     @x = x
     @y = y
     @slides.each do |slide|
@@ -30,5 +30,16 @@ class Space
     }.merge(@active ? COLOR_LIGHT_ON : COLOR_LIGHT_OFF)
 
     @slides[@active_index].draw
+  end
+
+  def rotate_slide
+    loop do
+      new_index = rand(3)
+      puts "#{@index} #{@active_index} #{new_index}"
+      if new_index != @active_index
+        @active_index = new_index
+        break
+      end
+    end
   end
 end
