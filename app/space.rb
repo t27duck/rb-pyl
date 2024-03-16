@@ -35,7 +35,6 @@ class Space
   def rotate_slide
     loop do
       new_index = rand(3)
-      puts "#{@index} #{@active_index} #{new_index}"
       if new_index != @active_index
         @active_index = new_index
         break
