@@ -3,6 +3,8 @@ require "app/support"
 class BigBoard
   include Support
   STOP_DELAY = 20 # Frames
+  SLIDE_FLASH = 15 # Frames
+  FLASHING_LIMIT = 5 * 2 # Handle on and off state
 
   attr_accessor :mode
 
@@ -23,11 +25,23 @@ class BigBoard
   private
 
   def tick_stop
-    @mode = "stopped" if tick_mod_hit?(STOP_DELAY)
+    if tick_mod_hit?(STOP_DELAY)
+      @mode = "stopped"
+      @flashing_complete = false
+      @flash_count = 0
+    end
   end
 
   def tick_stopped
-    @spaces[@selected_space].flash_and_stop
+    if !@flashing_complete
+      if @flash_count > FLASHING_LIMIT
+        @spaces[@selected_space].active = false
+        @flashing_complete = true
+      elsif tick_mod_hit?(SLIDE_FLASH)
+        @spaces[@selected_space].toggle_active
+        @flash_count += 1
+      end
+    end
   end
 
   def tick_spin
