@@ -1,3 +1,4 @@
+require "app/big_board"
 require "app/space"
 require "app/slide"
 
@@ -364,49 +365,13 @@ BOARD_LAYOUT = [
 
 def tick(game)
   game.state.scene ||= "title"
+  game.state.round = 0
 
-  game.state.board ||= build_board(game)
+  game.state.board ||= BigBoard.new(game)
 
-  game.state.pattern ||= PATTERNS[rand(PATTERNS.size)]
-  game.state.pattern_index ||= 0
-  game.state.selected_space = game.state.pattern[game.state.pattern_index]
+  game.state.board.tick_spin
 
-  game.state.board.each(&:rotate_slide) if game.inputs.keyboard.key_down.space || game.state.tick_count.mod_zero?(PANEL_ROTATION_TIME)
-
-  if game.state.tick_count.mod_zero?(SPACE_BOUNCE_TIME)
-    game.state.board[game.state.selected_space].active = false
-
-    game.state.pattern_index += 1
-    if game.state.pattern_index >= game.state.pattern.size
-      game.state.pattern_index = 0
-      game.state.pattern = PATTERNS[rand(PATTERNS.size)]
-    end
-    game.state.selected_space = game.state.pattern[game.state.pattern_index]
-
-    game.state.board[game.state.selected_space].active = true
-  end
-
-  game.state.board.each(&:draw)
-end
-
-def build_board(game)
-  board = []
-  SPACE_POSITIONS.each do |index, data|
-    # next if index > 0
-    if BOARD_LAYOUT[index]
-      slides = BOARD_LAYOUT[index].map do |slide_hash|
-        type = slide_hash.delete(:type)
-        Object.const_get("Slide::#{type}").new(game, **slide_hash)
-      end
-      board << Space.new(
-        game,
-        index: index,
-        slides: slides,
-        **data
-      )
-    end
-  end
-  board
+  game.state.board.draw
 end
 
 $gtk.reset
