@@ -1,12 +1,18 @@
+require "app/support"
+
 class Space
-  attr_accessor :active
-  attr_reader :x, :y
+  include Support
 
   LIGHT_WIDTH = 10
   WIDTH = 100 + LIGHT_WIDTH
 
   COLOR_LIGHT_OFF = { r: 0, g: 0, b: 0 }
   COLOR_LIGHT_ON = { r: 255, g: 255, b: 255 }
+
+  SLIDE_FLASH = 15 # Frames
+
+  attr_accessor :active
+  attr_reader :x, :y
 
   def initialize(game, index:, x:, y:, active_index: 0, slides: [])
     @index = index
@@ -30,6 +36,24 @@ class Space
     }.merge(@active ? COLOR_LIGHT_ON : COLOR_LIGHT_OFF)
 
     @slides[@active_index].draw
+  end
+
+  def flash_and_stop
+    return if @flashing_complete && !@active
+
+    if tick_mod_hit?(SLIDE_FLASH * 30)
+      @active = false
+      @flashing_complete = true
+      false
+    else
+      @flashing_complete = false
+      @active = !@active if tick_mod_hit?(SLIDE_FLASH)
+      true
+    end
+  end
+
+  def toggle_active
+    @active = !@active
   end
 
   def rotate_slide
