@@ -29,6 +29,7 @@ class BigBoard
       @mode = "stopped"
       @flashing_complete = false
       @flash_count = 0
+      ResolveSpin.new(game: @game, space: @spaces[@selected_space]).call
     end
   end
 

@@ -1,5 +1,6 @@
 class Slide
   attr_accessor :space
+  attr_reader :cash_value
 
   COLOR_BG_BLUE = { r: 0, g: 0, b: 255 }
   COLOR_FONT = { r: 255, g: 255, b: 255 }
@@ -40,6 +41,10 @@ class Slide
 
   def text
     @text || "NAME NOT FOUND"
+  end
+
+  def label
+    text
   end
 
   private

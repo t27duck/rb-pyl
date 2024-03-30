@@ -36,6 +36,10 @@ class Space
     @slides[@active_index].draw
   end
 
+  def active_slide
+    @slides[@active_index]
+  end
+
   def toggle_active
     @active = !@active
   end

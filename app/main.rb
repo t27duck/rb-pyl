@@ -46,10 +46,12 @@ def tick(game)
 
   game.state.board.tick
 
+  game.state.message ||= ""
   game.outputs.labels << {x: 10, y: 140, text: "Score: #{game.state.players[game.state.active_player].score}", alignment_enum: 0}
   game.outputs.labels << {x: 10, y: 120, text: "Earned: #{game.state.players[game.state.active_player].earned_spins}", alignment_enum: 0}
   game.outputs.labels << {x: 10, y: 100, text: "Passed: #{game.state.players[game.state.active_player].passed_spins}", alignment_enum: 0}
   game.outputs.labels << {x: 10, y: 80, text: "Whammies: #{game.state.players[game.state.active_player].whammies}", alignment_enum: 0}
+  game.outputs.labels << {x: 10, y: 60, text: "Message: #{game.state.message}", alignment_enum: 0}
 end
 
 $gtk.reset

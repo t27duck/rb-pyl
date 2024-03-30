@@ -1,5 +1,5 @@
 class Player
-  attr_reader :earned_spins, :passed_spins, :whammies, :score, :index
+  attr_accessor :earned_spins, :passed_spins, :whammies, :score, :index
 
   def initialize(index:)
     @index = index
