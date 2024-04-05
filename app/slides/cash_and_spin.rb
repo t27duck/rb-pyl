@@ -17,7 +17,7 @@ class Slide::CashAndSpin < Slide
       alignment_enum: 1,
       vertical_alignment_enum: 1,
       font: FONT,
-      size_enum: -1
+      size_enum: 0
     }.merge(COLOR_FONT_SHADOW)
 
     @game.outputs.labels << {
@@ -27,7 +27,7 @@ class Slide::CashAndSpin < Slide
       alignment_enum: 1,
       vertical_alignment_enum: 1,
       font: FONT,
-      size_enum: -1
+      size_enum: 0
     }.merge(COLOR_FONT)
 
     @game.outputs.labels << {
