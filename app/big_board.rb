@@ -14,6 +14,8 @@ class BigBoard
     @pattern_index = 0
     @selected_space = nil
     @mode = "spin"
+    @game.state.prize_pool = PrizePool.new(@game.state.round)
+    @game.state.prize_pool.generate
     configure_spaces
   end
 
@@ -29,7 +31,8 @@ class BigBoard
       @mode = "stopped"
       @flashing_complete = false
       @flash_count = 0
-      ResolveSpin.new(game: @game, space: @spaces[@selected_space]).call
+      @resolve_spin = ResolveSpin.new(game: @game, space: @spaces[@selected_space])
+      @resolve_spin.call
     end
   end
 
@@ -38,6 +41,7 @@ class BigBoard
       if @flash_count > FLASHING_LIMIT
         @spaces[@selected_space].active = false
         @flashing_complete = true
+        @resolve_spin.cleanup
       elsif tick_mod_hit?(SLIDE_FLASH)
         @spaces[@selected_space].toggle_active
         @flash_count += 1

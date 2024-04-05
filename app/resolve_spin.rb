@@ -11,12 +11,21 @@ class ResolveSpin
     case @slide
     when Slide::Cash
       @player.score += @slide.cash_value
+    when Slide::Prize
+      @player.score += @slide.cash_value
     when Slide::CashAndSpin
       @player.score += @slide.cash_value
       @player.earned_spins += 1
     when Slide::Whammy
       @player.score = 0
       @player.whammies += 1
+    end
+  end
+
+  def cleanup
+    case @slide
+    when Slide::Prize
+      @slide.cycle_prize
     end
   end
 end

@@ -1,6 +1,10 @@
 class Slide::Prize < Slide
   def text
-    "A Prize"
+    "#{@text} worth $#{@cash_value}"
+  end
+
+  def label
+    @text
   end
 
   def draw_label
@@ -23,5 +27,18 @@ class Slide::Prize < Slide
       font: FONT,
       size_enum: -1
     }.merge(COLOR_FONT)
+  end
+
+  def cycle_prize
+    data = @game.state.prize_pool.pick
+    @prefix = data[:prefix]
+    @text = @prefix ? "#{@prefix} #{data[:text]}" : data[:text]
+    @cash_value = data[:value]
+  end
+
+  private
+
+  def after_init_hook
+    cycle_prize
   end
 end

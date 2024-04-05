@@ -14,6 +14,7 @@ PATTERNS = [
 
 require "app/big_board"
 require "app/player"
+require "app/prize_pool"
 require "app/resolve_spin"
 require "app/space"
 require "app/slide"
@@ -27,6 +28,7 @@ require "app/slides/pick_space"
 require "app/slides/whammy"
 
 require "app/constants/board_layouts"
+require "app/constants/prizes"
 
 def tick(game)
   game.state.scene ||= "title"
