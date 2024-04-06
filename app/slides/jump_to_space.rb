@@ -1,4 +1,6 @@
 class Slide::JumpToSpace < Slide
+  attr_reader :target
+
   def draw_image
     @game.outputs.sprites << {
       x: @space.x + Space::LIGHT_WIDTH,
@@ -7,6 +9,10 @@ class Slide::JumpToSpace < Slide
       h: Space::WIDTH - (Space::LIGHT_WIDTH * 2),
       path: "sprites/#{@image}"
     }
+  end
+
+  def text
+    "#{@text} to..."
   end
 
   private

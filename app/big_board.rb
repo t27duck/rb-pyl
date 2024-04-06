@@ -4,9 +4,9 @@ class BigBoard
   include Support
   STOP_DELAY = 20 # Frames
   SLIDE_FLASH = 15 # Frames
-  FLASHING_LIMIT = 5 * 2 # Handle on and off state
+  FLASHING_LIMIT = 4 * 2 # Handle on and off state
 
-  attr_accessor :mode
+  attr_accessor :mode, :selected_space, :jumped_to_space
 
   def initialize(game)
     @game = game
@@ -16,6 +16,7 @@ class BigBoard
     @mode = "spin"
     @game.state.prize_pool = PrizePool.new(@game.state.round)
     @game.state.prize_pool.generate
+    @jumped_to_space = false
     configure_spaces
   end
 
@@ -31,7 +32,7 @@ class BigBoard
       @mode = "stopped"
       @flashing_complete = false
       @flash_count = 0
-      @resolve_spin = ResolveSpin.new(game: @game, space: @spaces[@selected_space])
+      @resolve_spin = ResolveSpin.new(game: @game, space: @spaces[@selected_space], board: self)
       @resolve_spin.call
     end
   end

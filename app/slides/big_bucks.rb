@@ -1,4 +1,4 @@
-class Slide::BigBucks < Slide
+class Slide::BigBucks < Slide::JumpToSpace
   def draw_image
     @game.outputs.sprites << {
       x: @space.x + Space::LIGHT_WIDTH,
