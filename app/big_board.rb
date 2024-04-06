@@ -38,15 +38,15 @@ class BigBoard
   end
 
   def tick_stopped
-    if !@flashing_complete
-      if @flash_count > FLASHING_LIMIT
-        @spaces[@selected_space].active = false
-        @flashing_complete = true
-        @resolve_spin.cleanup
-      elsif tick_mod_hit?(SLIDE_FLASH)
-        @spaces[@selected_space].toggle_active
-        @flash_count += 1
-      end
+    return if @flashing_complete
+
+    if @flash_count > FLASHING_LIMIT
+      @spaces[@selected_space].active = false
+      @flashing_complete = true
+      @resolve_spin.cleanup
+    elsif tick_mod_hit?(SLIDE_FLASH)
+      @spaces[@selected_space].toggle_active
+      @flash_count += 1
     end
   end
 
