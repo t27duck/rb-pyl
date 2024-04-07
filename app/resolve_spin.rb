@@ -9,9 +9,9 @@ class ResolveSpin
 
   def call
     if @board.jumped_to_space
-      @game.state.message = @slide.text
+      @game.state.messages = @slide.text
     else
-      @game.state.message = "Stopped on... #{@slide.text}"
+      @game.state.messages = ["Stopped on...", @slide.text]
     end
     case @slide
     when Slide::Cash

@@ -17,12 +17,14 @@ class BigBoard
     @game.state.prize_pool = PrizePool.new(@game.state.round)
     @game.state.prize_pool.generate
     @jumped_to_space = false
+    @center = Center.new(game)
     configure_spaces
   end
 
   def tick
     send("tick_#{@mode}")
     @spaces.each(&:draw)
+    @center.draw
   end
 
   private
@@ -34,6 +36,7 @@ class BigBoard
       @flash_count = 0
       @resolve_spin = ResolveSpin.new(game: @game, space: @spaces[@selected_space], board: self)
       @resolve_spin.call
+      @center.mode = "text"
     end
   end
 
@@ -51,6 +54,7 @@ class BigBoard
   end
 
   def tick_spin
+    @center.mode = "logo"
     @selected_space = @pattern[@pattern_index]
 
     @spaces.each(&:rotate_slide) if tick_mod_hit?(PANEL_ROTATION_TIME)
