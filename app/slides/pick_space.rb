@@ -1,4 +1,6 @@
 class Slide::PickSpace < Slide
+  attr_reader :choices
+
   def draw_image
     @game.outputs.sprites << {
       x: @space.x + Space::LIGHT_WIDTH,

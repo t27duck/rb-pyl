@@ -4,9 +4,11 @@ class BigBoard
   include Support
   STOP_DELAY = 20 # Frames
   SLIDE_FLASH = 15 # Frames
+  SLICE_PICK_FLASH = 30 # Frame
   FLASHING_LIMIT = 4 * 2 # Handle on and off state
 
   attr_accessor :mode, :selected_space, :jumped_to_space
+  attr_accessor :selectable_space, :selectable_spaces
 
   def initialize(game)
     @game = game
@@ -18,6 +20,7 @@ class BigBoard
     @game.state.prize_pool.generate
     @jumped_to_space = false
     @center = Center.new(game)
+    @selectable_spaces = []
     configure_spaces
   end
 
@@ -70,6 +73,16 @@ class BigBoard
       @selected_space = @pattern[@pattern_index]
 
       @spaces[@selected_space].active = true
+    end
+  end
+
+  def tick_select_space
+    @selectable_space ||= @selectable_spaces[0]
+    if tick_mod_hit?(SLICE_PICK_FLASH)
+      @selectable_space = @selectable_spaces.rotate![0]
+      @selectable_spaces.each do |index|
+        @spaces[index].active = index == @selectable_space
+      end
     end
   end
 

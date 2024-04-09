@@ -1,6 +1,6 @@
 class Slide
   attr_accessor :space
-  attr_reader :cash_value
+  attr_reader :cash_value, :spaces
 
   COLOR_BG_BLUE = { r: 0, g: 0, b: 255 }
   COLOR_FONT = { r: 255, g: 255, b: 255 }
@@ -16,7 +16,7 @@ class Slide
     @image = image
     @background_color = determine_background_color(color)
     @text = text
-    @choices = []
+    @choices = choices
     @target = target
     after_init_hook
   end

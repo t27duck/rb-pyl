@@ -16,14 +16,22 @@ class ResolveSpin
     case @slide
     when Slide::Cash
       @player.score += @slide.cash_value
+      @board.mode = "stopped"
     when Slide::Prize
       @player.score += @slide.cash_value
+      @board.mode = "stopped"
     when Slide::CashAndSpin
       @player.score += @slide.cash_value
       @player.earned_spins += 1
+      @board.mode = "stopped"
     when Slide::Whammy
       @player.score = 0
       @player.whammies += 1
+      @board.mode = "stopped"
+    when Slide::PickSpace
+      @board.mode = "select_space"
+      @board.selectable_space = nil
+      @board.selectable_spaces = @slide.choices
     end
   end
 
