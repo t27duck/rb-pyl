@@ -10,6 +10,8 @@ class BigBoard
   attr_accessor :mode, :selected_space, :jumped_to_space
   attr_accessor :selectable_space, :selectable_spaces
 
+  attr_reader :center, :spaces
+
   def initialize(game)
     @game = game
     @pattern = PATTERNS[rand(PATTERNS.size)]
@@ -30,17 +32,25 @@ class BigBoard
     @center.draw
   end
 
+  def space_selected(space_index)
+    @selected_space = space_index
+    @jumped_to_space = true
+    process_stop
+  end
+
   private
 
   def tick_stop
-    if tick_mod_hit?(STOP_DELAY)
-      @mode = "stopped"
-      @flashing_complete = false
-      @flash_count = 0
-      @resolve_spin = ResolveSpin.new(game: @game, space: @spaces[@selected_space], board: self)
-      @resolve_spin.call
-      @center.mode = "text"
-    end
+    process_stop if tick_mod_hit?(STOP_DELAY)
+  end
+
+  def process_stop
+    @mode = "stopped"
+    @flashing_complete = false
+    @flash_count = 0
+    @resolve_spin = ResolveSpin.new(game: @game, space: @spaces[@selected_space], board: self)
+    @resolve_spin.call
+    @center.mode = "text"
   end
 
   def tick_stopped
@@ -57,6 +67,7 @@ class BigBoard
   end
 
   def tick_spin
+    @jumped_to_space = false
     @center.mode = "logo"
     @selected_space = @pattern[@pattern_index]
 

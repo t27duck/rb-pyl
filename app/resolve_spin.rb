@@ -32,6 +32,7 @@ class ResolveSpin
       @board.mode = "select_space"
       @board.selectable_space = nil
       @board.selectable_spaces = @slide.choices
+      @board.center.configure_buttons_for_spaces(@slide.choices)
     end
   end
 
